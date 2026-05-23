@@ -1,0 +1,23 @@
+{
+  "name": "ci-sourcerer-profile-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Personal profile site for ci-sourcerer",
+  "scripts": {
+    "generate:blog": "node scripts/generate-blog.mjs",
+    "fetch:projects": "node scripts/fetch-projects.mjs",
+    "new-post": "sh scripts/blog-post.sh create",
+    "edit-post": "sh scripts/blog-post.sh edit",
+    "delete-post": "sh scripts/blog-post.sh delete",
+    "publish-posts": "sh scripts/publish-blog-posts.sh",
+    "prebuild": "npm run generate:blog && npm run fetch:projects",
+    "build": "node scripts/build.mjs",
+    "dev": "npm run generate:blog && npm run fetch:projects && node scripts/serve.mjs --root=. --port=4173",
+    "watch": "nodemon --watch content/blog --watch scripts --ext md,mjs --ignore data/**/*.json --ignore dist/** --exec \"npm run generate:blog && npm run fetch:projects\"",
+    "preview": "node scripts/serve.mjs --root=dist --port=4173"
+  },
+  "devDependencies": {
+    "marked": "^18.0.11",
+    "nodemon": "^3.1.14"
+  }
+}

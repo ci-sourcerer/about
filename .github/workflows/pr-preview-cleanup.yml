@@ -1,0 +1,78 @@
+name: PR Preview Cleanup
+
+on:
+  pull_request:
+    types:
+      - closed
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  cleanup-preview:
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Fetch gh-pages branch
+        run: |
+          if git ls-remote --exit-code origin gh-pages >/dev/null 2>&1; then
+            git fetch origin gh-pages:gh-pages
+            git switch gh-pages
+          else
+            echo "gh-pages branch does not exist; nothing to clean up."
+            exit 0
+          fi
+
+      - name: Remove preview directory
+        run: |
+          preview_dir="previews/pr-${{ github.event.pull_request.number }}"
+          if [ ! -d "$preview_dir" ]; then
+            echo "No preview directory to remove: $preview_dir"
+            exit 0
+          fi
+          git rm -r "$preview_dir"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "Remove PR preview for #${{ github.event.pull_request.number }}"
+          git push origin gh-pages
+
+      - name: Find preview URL comment
+        id: find_preview_comment
+        uses: peter-evans/find-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: github-actions[bot]
+          body-includes: "<!-- gh-pages-pr-preview -->"
+
+      - name: Create preview removed comment
+        if: ${{ steps.find_preview_comment.outputs.comment-id == '' }}
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            <!-- gh-pages-pr-preview -->
+            ❌ PR preview removed:
+            The preview at https://about.ci-sourcerer.com/previews/pr-${{ github.event.pull_request.number }}/ is no longer available because this pull request was closed.
+
+      - name: Update preview removed comment
+        if: ${{ steps.find_preview_comment.outputs.comment-id != '' }}
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          comment-id: ${{ steps.find_preview_comment.outputs.comment-id }}
+          edit-mode: replace
+          body: |
+            <!-- gh-pages-pr-preview -->
+            ❌ PR preview removed:
+            The preview at https://about.ci-sourcerer.com/previews/pr-${{ github.event.pull_request.number }}/ is no longer available because this pull request was closed.
