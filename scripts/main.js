@@ -8,6 +8,15 @@ const loadJson = async (path) => {
 
 const renderParagraphs = (container, paragraphs) => {
   container.innerHTML = "";
+
+  if (paragraphs.length === 0) {
+    const placeholder = document.createElement("p");
+    placeholder.className = "muted";
+    placeholder.textContent = "More details coming soon.";
+    container.appendChild(placeholder);
+    return;
+  }
+
   paragraphs.forEach((paragraph) => {
     const p = document.createElement("p");
     p.textContent = paragraph;
@@ -38,6 +47,15 @@ const renderSkills = (container, skills) => {
 
 const renderProjects = (container, projects) => {
   container.innerHTML = "";
+
+  if (projects.length === 0) {
+    const emptyState = document.createElement("article");
+    emptyState.className = "card";
+    emptyState.innerHTML = "<h3>No projects yet</h3><p>Projects will appear here once they are added.</p>";
+    container.appendChild(emptyState);
+    return;
+  }
+
   projects.forEach((project) => {
     const card = document.createElement("article");
     card.className = "card";
