@@ -40,7 +40,14 @@ const outputExists = async () => {
 };
 
 const main = async () => {
-  const config = JSON.parse(await fs.readFile(CONFIG_PATH, "utf8"));
+  await fs.mkdir(path.dirname(CONFIG_PATH), { recursive: true });
+  let config;
+  try {
+    config = JSON.parse(await fs.readFile(CONFIG_PATH, "utf8"));
+  } catch {
+    // If featured-repos.json is missing, generate empty projects.json
+    config = { owner: "", repos: [] };
+  }
   const token = process.env.GITHUB_TOKEN;
 
   if (!token) {
