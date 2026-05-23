@@ -172,6 +172,8 @@ const validatePost = (post, filePath) => {
 };
 
 const collectPosts = async () => {
+  // Treat a missing blog source directory as an empty blog collection.
+  await fs.mkdir(BLOG_DIR, { recursive: true });
   const entries = await fs.readdir(BLOG_DIR, { withFileTypes: true });
   const posts = [];
   const slugs = new Set();
