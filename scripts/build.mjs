@@ -64,7 +64,7 @@ const ensureExists = async (target) => {
             tagline: "Software developer",
             resumeUrl: "docs/resume.md",
             contactIntro: "Get in touch",
-            about: [],
+            about: ["A software developer focused on building reliable, well-tested applications and CI/CD pipelines."],
             skills: [],
             contactLinks: []
           }, null, 2) + "\n",
