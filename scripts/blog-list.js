@@ -1,10 +1,5 @@
-const loadJson = async (path) => {
-  const response = await fetch(path);
-  if (!response.ok) {
-    throw new Error(`Failed to load ${path}: ${response.status}`);
-  }
-  return response.json();
-};
+import { loadJson } from "./utils.js";
+import { renderNav } from "./nav.js";
 
 let activeBlogTag = null;
 
@@ -100,4 +95,5 @@ const initialize = async () => {
   }
 };
 
+renderNav();
 initialize();
