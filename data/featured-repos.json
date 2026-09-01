@@ -1,0 +1,20 @@
+{
+    "owner": "ci-sourcerer",
+    "repos": [
+        {
+            "name": "stacksmith"
+        },
+        {
+            "name": "dfparse"
+        },
+        {
+            "name": "externaldns-verizon-webhook"
+        },
+        {
+            "name": "common-python-tasks"
+        },
+        {
+            "name": "python-devcontainer"
+        }
+    ]
+}
