@@ -1,4 +1,58 @@
 {
-  "generatedAt": "2026-05-23T00:53:49.032Z",
-  "projects": []
+  "generatedAt": "2026-09-01T02:38:01.739Z",
+  "projects": [
+    {
+      "title": "Stacksmith",
+      "summary": "Terragrunt wrapper",
+      "tags": [
+        "iac",
+        "opentofu",
+        "python",
+        "terragrunt"
+      ],
+      "status": null,
+      "url": "https://github.com/ci-sourcerer/stacksmith"
+    },
+    {
+      "title": "Dfparse",
+      "summary": "Dump a Dockerfile's AST as JSON",
+      "tags": [
+        "dockerfile",
+        "go"
+      ],
+      "status": null,
+      "url": "https://github.com/ci-sourcerer/dfparse"
+    },
+    {
+      "title": "Externaldns Verizon Webhook",
+      "summary": "ExternalDNS Verizon Fios webhook provider",
+      "tags": [
+        "external-dns",
+        "kubernetes"
+      ],
+      "status": null,
+      "url": "https://github.com/ci-sourcerer/externaldns-verizon-webhook"
+    },
+    {
+      "title": "Common Python Tasks",
+      "summary": "Common Python Poe the Poet tasks",
+      "tags": [
+        "poethepoet",
+        "poetry",
+        "python"
+      ],
+      "status": null,
+      "url": "https://github.com/ci-sourcerer/common-python-tasks"
+    },
+    {
+      "title": "Python Devcontainer",
+      "summary": "Python dev container with various tools",
+      "tags": [
+        "devcontainer",
+        "python"
+      ],
+      "status": null,
+      "url": "https://github.com/ci-sourcerer/python-devcontainer"
+    }
+  ]
 }
